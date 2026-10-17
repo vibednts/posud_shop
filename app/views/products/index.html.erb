@@ -1,0 +1,66 @@
+<div class="container page">
+  <h1 class="page-title"><%= @category&.name || "Каталог посудомийних машин" %></h1>
+
+  <div class="catalog">
+    <aside class="filters">
+      <%= form_with url: products_path, method: :get, class: "filter-form" do %>
+        <%= hidden_field_tag :category, params[:category] if params[:category].present? %>
+
+        <label class="field">Пошук
+          <%= text_field_tag :q, params[:q], placeholder: "Назва моделі" %>
+        </label>
+
+        <label class="field">Бренд
+          <%= select_tag :brand, options_for_select(@brands, params[:brand]), include_blank: "Усі" %>
+        </label>
+
+        <label class="field">Ширина
+          <%= select_tag :width, options_for_select([["45 см", 45], ["60 см", 60]], params[:width]), include_blank: "Будь-яка" %>
+        </label>
+
+        <label class="field">Встановлення
+          <%= select_tag :installation,
+                options_for_select([["Вбудована", "built_in"], ["Окремостояча", "freestanding"]], params[:installation]),
+                include_blank: "Будь-яке" %>
+        </label>
+
+        <div class="field">Ціна, ₴
+          <div class="price-row">
+            <%= number_field_tag :min_price, params[:min_price], placeholder: "від", min: 0 %>
+            <%= number_field_tag :max_price, params[:max_price], placeholder: "до", min: 0 %>
+          </div>
+        </div>
+
+        <label class="field">Сортування
+          <%= select_tag :sort,
+                options_for_select([["За замовчуванням", ""], ["Спочатку дешевші", "price_asc"], ["Спочатку дорожчі", "price_desc"]], params[:sort]) %>
+        </label>
+
+        <%= submit_tag "Показати", class: "btn btn-primary btn-block" %>
+        <%= link_to "Скинути", products_path, class: "btn btn-ghost btn-block" %>
+      <% end %>
+
+      <div class="cat-list">
+        <h4>Категорії</h4>
+        <%= link_to "Усі товари", products_path, class: ("active" unless @category) %>
+        <% @categories.each do |c| %>
+          <%= link_to c.name, products_path(category: c.slug), class: ("active" if c == @category) %>
+        <% end %>
+      </div>
+    </aside>
+
+    <section>
+      <p class="muted-dark">Знайдено: <%= @products.size %></p>
+
+      <% if @products.any? %>
+        <div class="product-grid">
+          <% @products.each do |product| %>
+            <%= render "product_card", product: product %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty">За вашими фільтрами нічого не знайдено.</div>
+      <% end %>
+    </section>
+  </div>
+</div>

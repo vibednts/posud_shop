@@ -1,0 +1,32 @@
+<div class="container page">
+  <nav class="crumbs">
+    <%= link_to "Головна", root_path %> / <%= link_to "Каталог", products_path %> /
+    <%= link_to @product.category.name, products_path(category: @product.category.slug) %>
+  </nav>
+
+  <div class="product">
+    <div class="product-media"><span><%= @product.brand %></span></div>
+
+    <div>
+      <h1><%= @product.name %></h1>
+      <p class="stock <%= @product.in_stock? ? 'ok' : 'no' %>">
+        <%= @product.in_stock? ? "В наявності: #{@product.stock} шт." : "Немає в наявності" %>
+      </p>
+      <div class="product-price"><%= format_price(@product.price) %></div>
+      <button class="btn btn-primary btn-lg" <%= "disabled" unless @product.in_stock? %>>Додати в кошик</button>
+      <p class="product-desc"><%= @product.description %></p>
+    </div>
+  </div>
+
+  <h2>Характеристики</h2>
+  <table class="specs">
+    <tr><th>Бренд</th><td><%= @product.brand %></td></tr>
+    <tr><th>Ширина</th><td><%= @product.width_cm %> см</td></tr>
+    <tr><th>Встановлення</th><td><%= @product.built_in? ? "Вбудована" : "Окремостояча" %></td></tr>
+    <tr><th>Місткість</th><td><%= @product.capacity_sets %> комплектів</td></tr>
+    <tr><th>Клас енергоефективності</th><td><%= @product.energy_class %></td></tr>
+    <tr><th>Рівень шуму</th><td><%= @product.noise_db %> дБ</td></tr>
+    <tr><th>Програм миття</th><td><%= @product.programs_count %></td></tr>
+    <tr><th>Гарантія</th><td><%= @product.warranty_months %> міс.</td></tr>
+  </table>
+</div>

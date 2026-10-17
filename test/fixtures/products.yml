@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  brand: MyString
+  description: MyText
+  price: 9.99
+  stock: 1
+  width_cm: 1
+  installation: MyString
+  capacity_sets: 1
+  energy_class: MyString
+  noise_db: 1
+  programs_count: 1
+  warranty_months: 1
+  category: one
+
+two:
+  name: MyString
+  brand: MyString
+  description: MyText
+  price: 9.99
+  stock: 1
+  width_cm: 1
+  installation: MyString
+  capacity_sets: 1
+  energy_class: MyString
+  noise_db: 1
+  programs_count: 1
+  warranty_months: 1
+  category: two

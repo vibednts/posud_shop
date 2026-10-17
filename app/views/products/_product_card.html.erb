@@ -1,0 +1,22 @@
+<article class="card">
+  <%= link_to product_path(product), class: "card-media" do %>
+    <span class="card-brand"><%= product.brand %></span>
+    <span class="card-badge <%= product.in_stock? ? 'ok' : 'no' %>">
+      <%= product.in_stock? ? "В наявності" : "Немає" %>
+    </span>
+  <% end %>
+
+  <div class="card-body">
+    <%= link_to product.name, product_path(product), class: "card-title" %>
+    <ul class="card-specs">
+      <li><%= product.width_cm %> см</li>
+      <li><%= product.capacity_sets %> комплектів</li>
+      <li>клас <%= product.energy_class %></li>
+      <li><%= product.noise_db %> дБ</li>
+    </ul>
+    <div class="card-bottom">
+      <strong class="price"><%= format_price(product.price) %></strong>
+      <%= link_to "Детальніше", product_path(product), class: "btn btn-outline btn-sm" %>
+    </div>
+  </div>
+</article>
