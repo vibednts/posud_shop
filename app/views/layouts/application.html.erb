@@ -30,10 +30,15 @@
           <a href="#" class="nav-link">Контакти</a>
         </nav>
 
-        <div class="header-actions">
-          <a href="#" class="btn btn-ghost">Увійти</a>
-          <a href="#" class="btn btn-primary">Кошик</a>
-        </div>
+       <div class="header-actions">
+  <% if user_signed_in? %>
+    <%= link_to (current_user.name.presence || current_user.email), edit_user_registration_path, class: "btn btn-ghost" %>
+    <%= button_to "Вийти", destroy_user_session_path, method: :delete, class: "btn btn-ghost", form_class: "inline-form" %>
+  <% else %>
+    <%= link_to "Увійти", new_user_session_path, class: "btn btn-ghost" %>
+    <%= link_to "Реєстрація", new_user_registration_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
       </div>
     </header>
 

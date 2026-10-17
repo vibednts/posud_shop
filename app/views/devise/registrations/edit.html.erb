@@ -1,0 +1,28 @@
+<div class="container auth">
+  <div class="auth-card">
+    <h1>Мій профіль</h1>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <% if resource.errors.any? %>
+        <div class="flash flash-err">
+          <ul class="err-list">
+            <% resource.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <label class="field">Ім'я <%= f.text_field :name %></label>
+      <label class="field">Телефон <%= f.telephone_field :phone %></label>
+      <label class="field">Email <%= f.email_field :email %></label>
+      <label class="field">Новий пароль (залиште порожнім, якщо не змінюєте)
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </label>
+      <label class="field">Підтвердіть новий пароль
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </label>
+      <label class="field">Поточний пароль (для підтвердження змін)
+        <%= f.password_field :current_password, autocomplete: "current-password" %>
+      </label>
+      <%= f.submit "Зберегти", class: "btn btn-primary btn-block btn-lg" %>
+    <% end %>
+  </div>
+</div>

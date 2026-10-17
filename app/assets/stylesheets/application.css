@@ -234,6 +234,21 @@ input[type=submit].btn { font: inherit; font-weight: 600; }
 .specs th { width: 40%; color: var(--ink-soft); font-weight: 500; background: #fafcff; }
 .specs tr:last-child th, .specs tr:last-child td { border-bottom: 0; }
 
+/* ========== Автентифікація ========== */
+.auth { padding: 3rem 0 4rem; display: flex; justify-content: center; }
+.auth-card {
+  width: min(460px, 100%); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 20px; padding: 2.2rem; box-shadow: var(--shadow);
+}
+.auth-card h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.4rem; }
+.auth-card form { display: grid; gap: 1rem; }
+.check { display: flex; align-items: center; gap: .5rem; font-size: .9rem; color: var(--ink-soft); }
+.auth-alt { text-align: center; color: var(--ink-soft); margin: 1.4rem 0 0; }
+.auth-alt a { color: var(--brand); font-weight: 600; }
+.err-list { margin: 0; padding-left: 1.1rem; }
+.inline-form { display: inline; margin: 0; }
+.header-actions .btn { white-space: nowrap; }
+
 @media (max-width: 900px) {
   .catalog, .product { grid-template-columns: 1fr; }
   .filters { position: static; }

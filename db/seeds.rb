@@ -29,4 +29,10 @@ data.each do |name, brand, cat, price, stock, width, inst, sets, energy, noise, 
   )
 end
 
-puts "Створено: #{Category.count} категорій, #{Product.count} товарів"
+User.find_or_create_by!(email: "admin@dishshop.ua") do |u|
+  u.name = "Адміністратор"
+  u.password = "admin12345"
+  u.admin = true
+end
+
+puts "Створено: #{Category.count} категорій, #{Product.count} товарів, #{User.count} користувачів"
