@@ -1,0 +1,43 @@
+<div class="container page">
+  <h1 class="page-title">Кошик</h1>
+
+  <% if @items.empty? %>
+    <div class="empty">
+      <p>Ваш кошик порожній.</p>
+      <%= link_to "Перейти до каталогу", products_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <div class="cart-layout">
+      <div class="cart-list">
+        <% @items.each do |item| %>
+          <div class="cart-item">
+            <div class="cart-thumb"><%= item.product.brand %></div>
+
+            <div class="cart-info">
+              <%= link_to item.product.name, product_path(item.product), class: "card-title" %>
+              <span class="muted-dark"><%= format_price(item.product.price) %> / шт.</span>
+            </div>
+
+            <%= form_with url: cart_item_path(item), method: :patch, class: "qty-form" do %>
+              <%= number_field_tag :quantity, item.quantity, min: 1, max: item.product.stock, class: "qty" %>
+              <%= submit_tag "Оновити", class: "btn btn-outline btn-sm" %>
+            <% end %>
+
+            <strong class="cart-sum"><%= format_price(item.subtotal) %></strong>
+
+            <%= button_to "✕", cart_item_path(item), method: :delete, class: "btn-remove",
+                          form_class: "inline-form", title: "Видалити", aria: { label: "Видалити" } %>
+          </div>
+        <% end %>
+      </div>
+
+      <aside class="cart-summary">
+        <h3>Разом</h3>
+        <div class="sum-row"><span>Товарів</span><b><%= @cart.total_quantity %> шт.</b></div>
+        <div class="sum-row total"><span>До сплати</span><b><%= format_price(@cart.total_price) %></b></div>
+        <button class="btn btn-primary btn-block btn-lg" disabled>Оформити замовлення</button>
+        <%= link_to "Продовжити покупки", products_path, class: "btn btn-ghost btn-block" %>
+      </aside>
+    </div>
+  <% end %>
+</div>

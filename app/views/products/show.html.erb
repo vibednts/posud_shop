@@ -13,7 +13,8 @@
         <%= @product.in_stock? ? "В наявності: #{@product.stock} шт." : "Немає в наявності" %>
       </p>
       <div class="product-price"><%= format_price(@product.price) %></div>
-      <button class="btn btn-primary btn-lg" <%= "disabled" unless @product.in_stock? %>>Додати в кошик</button>
+      <%= button_to "Додати в кошик", cart_items_path, params: { product_id: @product.id },
+              class: "btn btn-primary btn-lg", disabled: !@product.in_stock? %>
       <p class="product-desc"><%= @product.description %></p>
     </div>
   </div>

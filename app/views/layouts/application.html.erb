@@ -31,6 +31,9 @@
         </nav>
 
        <div class="header-actions">
+       <%= link_to cart_path, class: "btn btn-outline cart-link" do %>
+  Кошик <span class="cart-badge"><%= cart_count %></span>
+<% end %>
   <% if user_signed_in? %>
     <%= link_to (current_user.name.presence || current_user.email), edit_user_registration_path, class: "btn btn-ghost" %>
     <%= button_to "Вийти", destroy_user_session_path, method: :delete, class: "btn btn-ghost", form_class: "inline-form" %>
