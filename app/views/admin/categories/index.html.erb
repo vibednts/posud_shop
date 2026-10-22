@@ -1,0 +1,27 @@
+<div class="container page">
+  <div class="admin-head">
+    <h1 class="page-title">Категорії</h1>
+    <%= link_to "+ Додати категорію", new_admin_category_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead><tr><th>Назва</th><th>Slug</th><th>Товарів</th><th></th></tr></thead>
+      <tbody>
+        <% @categories.each do |c| %>
+          <tr>
+            <td><b><%= c.name %></b></td>
+            <td><code><%= c.slug %></code></td>
+            <td><%= c.products.size %></td>
+            <td class="actions">
+              <%= link_to "Редагувати", edit_admin_category_path(c), class: "btn btn-outline btn-sm" %>
+              <%= button_to "Видалити", admin_category_path(c), method: :delete,
+                            class: "btn btn-danger btn-sm",
+                            form: { class: "inline-form", data: { turbo_confirm: "Видалити категорію «#{c.name}»?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

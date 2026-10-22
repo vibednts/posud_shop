@@ -1,0 +1,28 @@
+<div class="container page">
+  <h1 class="page-title">Звернення</h1>
+
+  <% if @messages.empty? %>
+    <div class="empty">Звернень поки немає.</div>
+  <% else %>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Дата</th><th>Від кого</th><th>Тема</th><th></th></tr></thead>
+        <tbody>
+          <% @messages.each do |m| %>
+            <tr>
+              <td><%= m.created_at.strftime("%d.%m.%Y %H:%M") %></td>
+              <td><b><%= m.name %></b><br><span class="muted-dark"><%= m.email %></span></td>
+              <td><%= m.subject %></td>
+              <td class="actions">
+                <%= link_to "Відкрити", admin_contact_message_path(m), class: "btn btn-outline btn-sm" %>
+                <%= button_to "Видалити", admin_contact_message_path(m), method: :delete,
+                              class: "btn btn-danger btn-sm",
+                              form: { class: "inline-form", data: { turbo_confirm: "Видалити звернення?" } } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

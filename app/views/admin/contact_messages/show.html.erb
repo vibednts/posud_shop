@@ -1,0 +1,12 @@
+<div class="container page">
+  <h1 class="page-title"><%= @message.subject %></h1>
+  <div class="panel">
+    <p><b><%= @message.name %></b> · <%= mail_to @message.email %>
+       <span class="muted-dark"> · <%= @message.created_at.strftime("%d.%m.%Y %H:%M") %></span></p>
+    <p class="pre"><%= @message.body %></p>
+    <div class="form-actions">
+      <%= mail_to @message.email, "Відповісти", subject: "Re: #{@message.subject}", class: "btn btn-primary" %>
+      <%= link_to "До списку", admin_contact_messages_path, class: "btn btn-ghost" %>
+    </div>
+  </div>
+</div>

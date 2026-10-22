@@ -1,6 +1,6 @@
 <article class="card">
   <%= link_to product_path(product), class: "card-media" do %>
-    <span class="card-brand"><%= product.brand %></span>
+   <%= product_picture(product) %>
     <span class="card-badge <%= product.in_stock? ? 'ok' : 'no' %>">
       <%= product.in_stock? ? "В наявності" : "Немає" %>
     </span>

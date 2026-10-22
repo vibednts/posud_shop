@@ -1,0 +1,51 @@
+<div class="container page">
+  <h1 class="page-title">Панель керування</h1>
+
+  <div class="stat-grid">
+    <div class="stat"><b><%= @products_count %></b><span>Товарів</span></div>
+    <div class="stat"><b><%= @orders_count %></b><span>Замовлень</span></div>
+    <div class="stat"><b><%= @pending_count %></b><span>Очікують обробки</span></div>
+    <div class="stat"><b><%= @messages_count %></b><span>Звернень</span></div>
+    <div class="stat"><b><%= format_price(@revenue) %></b><span>Сума замовлень</span></div>
+  </div>
+
+  <div class="dash-cols">
+    <section>
+      <h3>Останні замовлення</h3>
+      <% if @recent_orders.empty? %>
+        <div class="empty">Замовлень ще немає.</div>
+      <% else %>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <% @recent_orders.each do |o| %>
+              <tr>
+                <td><%= link_to "№#{o.id}", admin_order_path(o) %></td>
+                <td><%= o.customer_name %></td>
+                <td><span class="status status-<%= o.status %>"><%= o.status_label %></span></td>
+                <td><b><%= format_price(o.total) %></b></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+    </section>
+
+    <section>
+      <h3>Закінчуються на складі</h3>
+      <% if @low_stock.empty? %>
+        <div class="empty">Усього вдосталь.</div>
+      <% else %>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <% @low_stock.each do |p| %>
+              <tr>
+                <td><%= link_to p.name, edit_admin_product_path(p) %></td>
+                <td><b><%= p.stock %> шт.</b></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+    </section>
+  </div>
+</div>

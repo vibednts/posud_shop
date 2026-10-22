@@ -1,0 +1,32 @@
+<div class="container page">
+  <h1 class="page-title">Замовлення</h1>
+
+  <div class="filter-tabs">
+    <%= link_to "Усі", admin_orders_path, class: ("active" if params[:status].blank?) %>
+    <% Order::STATUS_LABELS.each do |key, label| %>
+      <%= link_to label, admin_orders_path(status: key), class: ("active" if params[:status] == key) %>
+    <% end %>
+  </div>
+
+  <% if @orders.empty? %>
+    <div class="empty">Замовлень немає.</div>
+  <% else %>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>№</th><th>Дата</th><th>Клієнт</th><th>Статус</th><th>Сума</th><th></th></tr></thead>
+        <tbody>
+          <% @orders.each do |o| %>
+            <tr>
+              <td><b>№<%= o.id %></b></td>
+              <td><%= o.created_at.strftime("%d.%m.%Y %H:%M") %></td>
+              <td><%= o.customer_name %><br><span class="muted-dark"><%= o.phone %></span></td>
+              <td><span class="status status-<%= o.status %>"><%= o.status_label %></span></td>
+              <td><b><%= format_price(o.total) %></b></td>
+              <td><%= link_to "Відкрити", admin_order_path(o), class: "btn btn-outline btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

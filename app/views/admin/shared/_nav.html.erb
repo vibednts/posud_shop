@@ -1,0 +1,9 @@
+<nav class="admin-nav">
+  <div class="container admin-nav-inner">
+    <%= link_to "Панель", admin_root_path, class: ("active" if controller_name == "dashboard") %>
+    <%= link_to "Товари", admin_products_path, class: ("active" if controller_name == "products") %>
+    <%= link_to "Категорії", admin_categories_path, class: ("active" if controller_name == "categories") %>
+    <%= link_to "Замовлення", admin_orders_path, class: ("active" if controller_name == "orders") %>
+    <%= link_to "Звернення", admin_contact_messages_path, class: ("active" if controller_name == "contact_messages") %>
+  </div>
+</nav>

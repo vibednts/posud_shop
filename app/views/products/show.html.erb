@@ -5,8 +5,7 @@
   </nav>
 
   <div class="product">
-    <div class="product-media"><span><%= @product.brand %></span></div>
-
+    <div class="product-media"><%= product_picture(@product) %></div>
     <div>
       <h1><%= @product.name %></h1>
       <p class="stock <%= @product.in_stock? ? 'ok' : 'no' %>">

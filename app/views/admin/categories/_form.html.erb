@@ -1,0 +1,20 @@
+<%= form_with model: [:admin, category], class: "panel admin-form" do |f| %>
+  <% if category.errors.any? %>
+    <div class="flash flash-err">
+      <ul class="err-list">
+        <% category.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <label class="field">Назва <%= f.text_field :name %></label>
+  <label class="field">Slug (для адреси, латиницею)
+    <%= f.text_field :slug, placeholder: "напр., slim" %>
+  </label>
+  <label class="field">Опис <%= f.text_area :description, rows: 3 %></label>
+
+  <div class="form-actions">
+    <%= f.submit "Зберегти", class: "btn btn-primary btn-lg" %>
+    <%= link_to "Скасувати", admin_categories_path, class: "btn btn-ghost btn-lg" %>
+  </div>
+<% end %>

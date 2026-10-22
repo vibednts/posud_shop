@@ -36,6 +36,7 @@
 <% end %>
 <%= link_to "Замовлення", orders_path, class: "btn btn-ghost" %>
   <% if user_signed_in? %>
+  <%= link_to "Адмін", admin_root_path, class: "btn btn-ghost" if current_user.admin? %>
     <%= link_to (current_user.name.presence || current_user.email), edit_user_registration_path, class: "btn btn-ghost" %>
     <%= button_to "Вийти", destroy_user_session_path, method: :delete, class: "btn btn-ghost", form_class: "inline-form" %>
   <% else %>
@@ -48,7 +49,7 @@
 
     <% if notice %><div class="flash flash-ok container"><%= notice %></div><% end %>
     <% if alert %><div class="flash flash-err container"><%= alert %></div><% end %>
-
+<%= render "admin/shared/nav" if controller_path.start_with?("admin/") %>
     <main><%= yield %></main>
 
     <footer class="site-footer">

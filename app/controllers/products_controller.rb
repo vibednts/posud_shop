@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
     @brands = Product.distinct.order(:brand).pluck(:brand)
     @category = Category.find_by(slug: params[:category])
 
-    scope = Product.includes(:category)
+    scope = Product.includes(:category).with_attached_image
     scope = scope.where(category: @category) if @category
     scope = scope.where(brand: params[:brand]) if params[:brand].present?
     scope = scope.where(width_cm: params[:width]) if params[:width].present?

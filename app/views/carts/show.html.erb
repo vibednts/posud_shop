@@ -11,7 +11,7 @@
       <div class="cart-list">
         <% @items.each do |item| %>
           <div class="cart-item">
-            <div class="cart-thumb"><%= item.product.brand %></div>
+		<div class="cart-thumb"><%= product_picture(item.product) %></div>
 
             <div class="cart-info">
               <%= link_to item.product.name, product_path(item.product), class: "card-title" %>

@@ -1,0 +1,50 @@
+<div class="container page">
+  <h1 class="page-title">Замовлення №<%= @order.id %></h1>
+  <p><span class="status status-<%= @order.status %>"><%= @order.status_label %></span>
+     <span class="muted-dark"> від <%= @order.created_at.strftime("%d.%m.%Y %H:%M") %></span></p>
+
+  <div class="cart-layout">
+    <div>
+      <table class="specs">
+        <% @order.order_items.each do |item| %>
+          <tr>
+            <th><%= item.product_name %></th>
+            <td><%= item.quantity %> × <%= format_price(item.unit_price) %></td>
+            <td><b><%= format_price(item.subtotal) %></b></td>
+          </tr>
+        <% end %>
+      </table>
+      <% if @order.comment.present? %>
+        <h3 style="margin-top:1.5rem">Коментар клієнта</h3>
+        <p class="pre"><%= @order.comment %></p>
+      <% end %>
+    </div>
+
+    <aside class="cart-summary">
+      <h3>Клієнт і доставка</h3>
+      <div class="sum-row"><span>Ім'я</span><b><%= @order.customer_name %></b></div>
+      <div class="sum-row"><span>Телефон</span><b><%= @order.phone %></b></div>
+      <div class="sum-row"><span>Email</span><b><%= @order.email %></b></div>
+      <div class="sum-row"><span>Доставка</span><b><%= @order.delivery_label %></b></div>
+      <% unless @order.pickup? %>
+        <div class="sum-row"><span>Адреса</span><b><%= @order.city %>, <%= @order.address %></b></div>
+      <% end %>
+      <div class="sum-row"><span>Оплата</span><b><%= @order.payment_label %></b></div>
+      <div class="sum-row total"><span>Разом</span><b><%= format_price(@order.total) %></b></div>
+
+      <% if @order.cancelled? %>
+        <p class="hint">Скасоване замовлення змінити не можна.</p>
+      <% else %>
+        <%= form_with model: [:admin, @order], class: "status-form" do |f| %>
+          <label class="field">Змінити статус
+            <%= f.select :status, Order::STATUS_LABELS.map { |k, v| [v, k] } %>
+          </label>
+          <%= f.submit "Зберегти статус", class: "btn btn-primary btn-block" %>
+        <% end %>
+        <p class="hint">При скасуванні товари повернуться на склад.</p>
+      <% end %>
+
+      <%= link_to "До списку замовлень", admin_orders_path, class: "btn btn-ghost btn-block" %>
+    </aside>
+  </div>
+</div>

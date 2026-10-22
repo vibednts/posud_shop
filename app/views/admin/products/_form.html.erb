@@ -1,0 +1,39 @@
+<%= form_with model: [:admin, product], class: "panel admin-form" do |f| %>
+  <% if product.errors.any? %>
+    <div class="flash flash-err">
+      <ul class="err-list">
+        <% product.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-grid">
+    <label class="field">Назва <%= f.text_field :name %></label>
+    <label class="field">Бренд <%= f.text_field :brand %></label>
+    <label class="field">Категорія <%= f.collection_select :category_id, Category.order(:name), :id, :name %></label>
+    <label class="field">Ціна, ₴ <%= f.number_field :price, step: "0.01", min: 0 %></label>
+    <label class="field">Залишок, шт. <%= f.number_field :stock, min: 0 %></label>
+    <label class="field">Ширина <%= f.select :width_cm, Product::WIDTHS.map { |w| ["#{w} см", w] } %></label>
+    <label class="field">Встановлення <%= f.select :installation, Product::INSTALLATION_LABELS.map { |k, v| [v, k] } %></label>
+    <label class="field">Місткість, комплектів <%= f.number_field :capacity_sets, min: 1 %></label>
+    <label class="field">Клас енергоефективності <%= f.select :energy_class, Product::ENERGY_CLASSES %></label>
+    <label class="field">Рівень шуму, дБ <%= f.number_field :noise_db, min: 30, max: 70 %></label>
+    <label class="field">Кількість програм <%= f.number_field :programs_count, min: 1 %></label>
+    <label class="field">Гарантія, міс. <%= f.number_field :warranty_months, min: 0 %></label>
+    <label class="field span-2">Опис <%= f.text_area :description, rows: 4 %></label>
+
+    <div class="field span-2">
+      <span>Фото товару (JPG, PNG, WebP, до 5 МБ)</span>
+      <% if product.persisted? && product.image.attached? && product.image.blob.persisted? %>
+        <%= image_tag product.image, class: "admin-preview", alt: "" %>
+        <label class="check"><%= check_box_tag :remove_image, "1" %> Видалити поточне фото</label>
+      <% end %>
+      <%= f.file_field :image, accept: "image/png,image/jpeg,image/webp" %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit (product.persisted? ? "Зберегти" : "Створити товар"), class: "btn btn-primary btn-lg" %>
+    <%= link_to "Скасувати", admin_products_path, class: "btn btn-ghost btn-lg" %>
+  </div>
+<% end %>

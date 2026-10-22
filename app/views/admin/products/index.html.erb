@@ -1,0 +1,36 @@
+<div class="container page">
+  <div class="admin-head">
+    <h1 class="page-title">Товари</h1>
+    <%= link_to "+ Додати товар", new_admin_product_path, class: "btn btn-primary" %>
+  </div>
+
+  <%= form_with url: admin_products_path, method: :get, class: "admin-search" do %>
+    <%= text_field_tag :q, params[:q], placeholder: "Пошук за назвою або брендом" %>
+    <%= submit_tag "Знайти", class: "btn btn-outline btn-sm" %>
+  <% end %>
+
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr><th></th><th>Назва</th><th>Категорія</th><th>Ціна</th><th>Залишок</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% @products.each do |p| %>
+          <tr>
+            <td class="thumb"><%= product_picture(p) %></td>
+            <td><b><%= p.name %></b><br><span class="muted-dark"><%= p.brand %></span></td>
+            <td><%= p.category.name %></td>
+            <td><%= format_price(p.price) %></td>
+            <td><%= p.stock %></td>
+            <td class="actions">
+              <%= link_to "Редагувати", edit_admin_product_path(p), class: "btn btn-outline btn-sm" %>
+              <%= button_to "Видалити", admin_product_path(p), method: :delete,
+                            class: "btn btn-danger btn-sm",
+                            form: { class: "inline-form", data: { turbo_confirm: "Видалити товар «#{p.name}»?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
