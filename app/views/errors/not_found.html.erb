@@ -1,0 +1,15 @@
+<div class="container error-page">
+  <p class="error-code">404</p>
+  <h1>Сторінку не знайдено</h1>
+  <p>Можливо, посилання застаріло, або в адресі є помилка. Спробуйте знайти потрібну модель у каталозі.</p>
+
+  <div class="error-actions">
+    <%= link_to "На головну", root_path, class: "btn btn-primary btn-lg" %>
+    <%= link_to "До каталогу", products_path, class: "btn btn-outline btn-lg" %>
+  </div>
+
+  <%= form_with url: products_path, method: :get, class: "error-search" do %>
+    <%= text_field_tag :q, nil, placeholder: "Пошук моделі" %>
+    <%= submit_tag "Шукати", class: "btn btn-primary" %>
+  <% end %>
+</div>

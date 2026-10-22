@@ -27,7 +27,7 @@
           <%= link_to "Головна", root_path, class: "nav-link" %>
 	<%= link_to "Каталог", products_path, class: "nav-link" %>
           <a href="#" class="nav-link">Доставка й оплата</a>
-          <a href="#" class="nav-link">Контакти</a>
+	<%= link_to "Контакти", contacts_path, class: "nav-link" %>
         </nav>
 
        <div class="header-actions">
@@ -63,7 +63,8 @@
         </div>
         <div>
           <h4>Клієнтам</h4>
-          <a href="#">Доставка й оплата</a><a href="#">Гарантія</a><a href="#">Зворотний зв'язок</a>
+          <a href="#">Доставка й оплата</a><a href="#">Гарантія</a>
+          <%= link_to "Зворотний зв'язок", contacts_path %>
         </div>
         <div>
           <h4>Контакти</h4>

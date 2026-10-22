@@ -1,0 +1,40 @@
+<div class="container page">
+  <h1 class="page-title">Контакти</h1>
+
+  <div class="contact-layout">
+    <div class="panel contact-info">
+      <h3>Зв'яжіться з нами</h3>
+      <p><b>Телефон:</b><br>+380 66 253 95 01</p>
+      <p><b>Email:</b><br>info@dishshop.ua</p>
+      <p><b>Графік роботи:</b><br>Пн-Нд, 9:00-20:00</p>
+      <p><b>Адреса:</b><br>м. Івано-Франківськ, вул. Прикладна, 1</p>
+      <p class="hint">Відповідаємо протягом робочого дня.</p>
+    </div>
+
+    <%= form_with model: @contact_message, url: contacts_path, class: "panel contact-form" do |f| %>
+      <h3>Написати нам</h3>
+
+      <% if @contact_message.errors.any? %>
+        <div class="flash flash-err">
+          <ul class="err-list">
+            <% @contact_message.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-grid">
+        <label class="field">Ім'я <%= f.text_field :name %></label>
+        <label class="field">Email <%= f.email_field :email %></label>
+        <label class="field span-2">Тема <%= f.text_field :subject, placeholder: "Напр., Питання щодо доставки" %></label>
+        <label class="field span-2">Повідомлення <%= f.text_area :body, rows: 6 %></label>
+      </div>
+
+      <%# Пастка для ботів: приховане від людей поле %>
+      <div class="hp" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <%= f.submit "Надіслати", class: "btn btn-primary btn-lg" %>
+    <% end %>
+  </div>
+</div>

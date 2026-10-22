@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_cart, :cart_count
-
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
  # Кошик поточного відвідувача (створюється, коли потрібен)
   def current_cart
     @current_cart ||=
@@ -41,6 +41,10 @@ class ApplicationController < ActionController::Base
   def merge_guest_cart(user)
     guest = Cart.find_by(id: session[:cart_id], user_id: nil)
     return unless guest
+
+  def render_not_found
+  render "errors/not_found", status: :not_found, formats: :html
+end
 
     user_cart = Cart.find_or_create_by!(user: user)
     guest.cart_items.includes(:product).each do |item|
