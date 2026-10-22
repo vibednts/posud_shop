@@ -35,7 +35,7 @@
         <h3>Разом</h3>
         <div class="sum-row"><span>Товарів</span><b><%= @cart.total_quantity %> шт.</b></div>
         <div class="sum-row total"><span>До сплати</span><b><%= format_price(@cart.total_price) %></b></div>
-        <button class="btn btn-primary btn-block btn-lg" disabled>Оформити замовлення</button>
+        <%= link_to "Оформити замовлення", new_order_path, class: "btn btn-primary btn-block btn-lg" %>
         <%= link_to "Продовжити покупки", products_path, class: "btn btn-ghost btn-block" %>
       </aside>
     </div>

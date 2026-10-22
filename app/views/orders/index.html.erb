@@ -1,0 +1,21 @@
+<div class="container page">
+  <h1 class="page-title">Мої замовлення</h1>
+
+  <% if @orders.empty? %>
+    <div class="empty">
+      <p>Ви ще нічого не замовляли.</p>
+      <%= link_to "До каталогу", products_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <div class="cart-list">
+      <% @orders.each do |order| %>
+        <%= link_to order_path(order), class: "order-row" do %>
+          <b>№<%= order.id %></b>
+          <span class="muted-dark"><%= l(order.created_at, format: "%d.%m.%Y") %></span>
+          <span class="status status-<%= order.status %>"><%= order.status_label %></span>
+          <strong><%= format_price(order.total) %></strong>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

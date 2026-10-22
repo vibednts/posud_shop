@@ -1,0 +1,100 @@
+<% items_total = current_cart.total_price %>
+
+<div class="container page">
+  <h1 class="page-title">Оформлення замовлення</h1>
+
+  <%= form_with model: @order, class: "checkout" do |f| %>
+    <div class="checkout-main">
+
+      <% if @order.errors.any? %>
+        <div class="flash flash-err">
+          <ul class="err-list">
+            <% @order.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <section class="panel">
+        <h3>Контактні дані</h3>
+        <div class="form-grid">
+          <label class="field">Ім'я та прізвище <%= f.text_field :customer_name %></label>
+          <label class="field">Телефон <%= f.telephone_field :phone, placeholder: "+380..." %></label>
+          <label class="field span-2">Email <%= f.email_field :email %></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Спосіб доставки</h3>
+        <div class="options">
+          <% Order::DELIVERY_LABELS.each do |key, label| %>
+            <% cost = Order.delivery_cost_for(key, items_total) %>
+            <label class="option">
+              <%= f.radio_button :delivery_method, key, data: { cost: cost, pickup: (key == "pickup") } %>
+              <span class="option-body">
+                <b><%= label %></b>
+                <small><%= cost.zero? ? "Безкоштовно" : format_price(cost) %></small>
+              </span>
+            </label>
+          <% end %>
+        </div>
+
+        <div class="form-grid" id="address-fields">
+          <label class="field">Місто <%= f.text_field :city %></label>
+          <label class="field">Відділення / адреса <%= f.text_field :address, placeholder: "Напр., Відділення №5" %></label>
+        </div>
+        <p class="hint">Безкоштовна доставка від <%= format_price(Order::FREE_DELIVERY_FROM) %> (крім кур'єра).</p>
+      </section>
+
+      <section class="panel">
+        <h3>Спосіб оплати</h3>
+        <div class="options">
+          <% Order::PAYMENT_LABELS.each do |key, label| %>
+            <label class="option">
+              <%= f.radio_button :payment_method, key %>
+              <span class="option-body"><b><%= label %></b></span>
+            </label>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Коментар</h3>
+        <%= f.text_area :comment, rows: 3, placeholder: "Побажання до замовлення (необов'язково)" %>
+      </section>
+    </div>
+
+    <aside class="cart-summary">
+      <h3>Ваше замовлення</h3>
+      <% current_cart.cart_items.includes(:product).each do |item| %>
+        <div class="sum-row">
+          <span><%= item.product.name %> × <%= item.quantity %></span>
+          <b><%= format_price(item.subtotal) %></b>
+        </div>
+      <% end %>
+      <div class="sum-row"><span>Товари</span><b><%= format_price(items_total) %></b></div>
+      <div class="sum-row"><span>Доставка</span><b id="delivery-cost">—</b></div>
+      <div class="sum-row total"><span>До сплати</span><b id="grand-total"><%= format_price(items_total) %></b></div>
+      <%= f.submit "Підтвердити замовлення", class: "btn btn-primary btn-block btn-lg" %>
+      <%= link_to "Назад до кошика", cart_path, class: "btn btn-ghost btn-block" %>
+    </aside>
+  <% end %>
+</div>
+
+<script>
+  (function () {
+    var itemsTotal = <%= items_total.to_i %>;
+    var fmt = function (n) { return n.toLocaleString("uk-UA").replace(/\u00a0/g, " ") + " ₴"; };
+    var radios = document.querySelectorAll("input[name='order[delivery_method]']");
+    var addr = document.getElementById("address-fields");
+
+    function update() {
+      var chosen = document.querySelector("input[name='order[delivery_method]']:checked");
+      var cost = chosen ? parseInt(chosen.dataset.cost, 10) : 0;
+      document.getElementById("delivery-cost").textContent = cost === 0 ? "Безкоштовно" : fmt(cost);
+      document.getElementById("grand-total").textContent = fmt(itemsTotal + cost);
+      addr.style.display = (chosen && chosen.dataset.pickup === "true") ? "none" : "";
+    }
+    radios.forEach(function (r) { r.addEventListener("change", update); });
+    update();
+  })();
+</script>

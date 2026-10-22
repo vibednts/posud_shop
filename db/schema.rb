@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_154607) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_22_093353) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "product_id", null: false
@@ -36,6 +36,36 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_154607) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "product_id", null: false
+    t.string "product_name"
+    t.decimal "unit_price", precision: 10, scale: 2
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "status", default: "pending", null: false
+    t.string "delivery_method"
+    t.string "payment_method"
+    t.string "customer_name"
+    t.string "phone"
+    t.string "email"
+    t.string "city"
+    t.string "address"
+    t.text "comment"
+    t.decimal "delivery_cost", precision: 10, scale: 2
+    t.decimal "total", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -75,5 +105,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_154607) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
 end
