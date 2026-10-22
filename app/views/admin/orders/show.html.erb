@@ -30,6 +30,9 @@
         <div class="sum-row"><span>Адреса</span><b><%= @order.city %>, <%= @order.address %></b></div>
       <% end %>
       <div class="sum-row"><span>Оплата</span><b><%= @order.payment_label %></b></div>
+      <% if @order.paid_at %>
+  <div class="sum-row"><span>Оплачено</span><b><%= @order.paid_at.strftime("%d.%m.%Y %H:%M") %> · •••• <%= @order.card_last4 %></b></div>
+<% end %>
       <div class="sum-row total"><span>Разом</span><b><%= format_price(@order.total) %></b></div>
 
       <% if @order.cancelled? %>

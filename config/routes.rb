@@ -17,6 +17,9 @@ end
   resources :orders, only: %i[index show update]
   resources :contact_messages, only: %i[index show destroy]
 end
+  resources :orders, only: %i[index new create show] do
+  resource :payment, only: %i[new create]
+end
    match "*path", to: "errors#not_found", via: :all,
       constraints: ->(req) { !req.path.start_with?("/rails/") }
 end

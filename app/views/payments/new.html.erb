@@ -1,0 +1,63 @@
+<div class="container page">
+  <h1 class="page-title">Оплата замовлення №<%= @order.id %></h1>
+
+  <div class="demo-banner">
+    <b>Демонстраційний режим.</b> Реальні кошти не списуються, дані картки не зберігаються.
+    Тестові картки: <code>4242 4242 4242 4242</code> — успішна оплата,
+    <code>4000 0000 0000 0002</code> — платіж відхилено.
+    Термін дії — будь-яка майбутня дата, CVV — три цифри.
+  </div>
+
+  <div class="pay-layout">
+    <%= form_with url: order_payment_path(@order), method: :post, class: "panel pay-form" do %>
+      <h3>Дані картки</h3>
+
+      <label class="field">Номер картки
+        <%= text_field_tag :card_number, nil, inputmode: "numeric", autocomplete: "cc-number",
+                           placeholder: "0000 0000 0000 0000", maxlength: 19 %>
+      </label>
+
+      <label class="field">Власник картки (латиницею)
+        <%= text_field_tag :holder, params[:holder], autocomplete: "cc-name", placeholder: "IVAN PETRENKO" %>
+      </label>
+
+      <div class="form-grid">
+        <label class="field">Термін дії
+          <%= text_field_tag :expiry, params[:expiry], inputmode: "numeric", autocomplete: "cc-exp",
+                             placeholder: "ММ/РР", maxlength: 5 %>
+        </label>
+        <label class="field">CVV
+          <%= password_field_tag :cvv, nil, inputmode: "numeric", autocomplete: "cc-csc",
+                                 placeholder: "•••", maxlength: 3 %>
+        </label>
+      </div>
+
+      <%= submit_tag "Сплатити #{format_price(@order.total)}", class: "btn btn-primary btn-block btn-lg" %>
+      <%= link_to "Оплатити пізніше", order_path(@order), class: "btn btn-ghost btn-block" %>
+    <% end %>
+
+    <aside class="cart-summary">
+      <h3>Замовлення</h3>
+      <% @order.order_items.each do |item| %>
+        <div class="sum-row"><span><%= item.product_name %> × <%= item.quantity %></span><b><%= format_price(item.subtotal) %></b></div>
+      <% end %>
+      <div class="sum-row"><span>Доставка</span><b><%= @order.delivery_cost.to_f.zero? ? "Безкоштовно" : format_price(@order.delivery_cost) %></b></div>
+      <div class="sum-row total"><span>До сплати</span><b><%= format_price(@order.total) %></b></div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var num = document.getElementById("card_number");
+    var exp = document.getElementById("expiry");
+    num.addEventListener("input", function () {
+      var d = num.value.replace(/\D/g, "").slice(0, 16);
+      num.value = d.replace(/(.{4})/g, "$1 ").trim();
+    });
+    exp.addEventListener("input", function () {
+      var d = exp.value.replace(/\D/g, "").slice(0, 4);
+      exp.value = d.length > 2 ? d.slice(0, 2) + "/" + d.slice(2) : d;
+    });
+  })();
+</script>

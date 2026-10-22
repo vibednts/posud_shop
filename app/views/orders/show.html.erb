@@ -27,6 +27,13 @@
       <div class="sum-row"><span>Оплата</span><b><%= @order.payment_label %></b></div>
       <div class="sum-row"><span>Вартість доставки</span><b><%= format_price(@order.delivery_cost) %></b></div>
       <div class="sum-row total"><span>Разом</span><b><%= format_price(@order.total) %></b></div>
+      <% if @order.paid_at %>
+  <div class="sum-row"><span>Оплачено</span><b><%= @order.paid_at.strftime("%d.%m.%Y %H:%M") %></b></div>
+  <div class="sum-row"><span>Картка</span><b>•••• <%= @order.card_last4 %></b></div>
+  <div class="sum-row"><span>Операція</span><b><%= @order.payment_reference %></b></div>
+<% elsif @order.payable? %>
+  <%= link_to "Оплатити замовлення", new_order_payment_path(@order), class: "btn btn-primary btn-block btn-lg" %>
+<% end %>
       <%= link_to "Мої замовлення", orders_path, class: "btn btn-outline btn-block" %>
     </aside>
   </div>

@@ -65,6 +65,13 @@ def change_status!(new_status)
   end
 end
 
+  def payable? = card? && pending?
+
+  def mark_paid!(last4)
+    update!(status: "paid", paid_at: Time.current, card_last4: last4,
+            payment_reference: "DEMO-#{SecureRandom.hex(5).upcase}")
+  end
+
   # Створює замовлення з кошика: перевіряє залишки, списує їх, очищає кошик
   def place!(cart)
     transaction do

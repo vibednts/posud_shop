@@ -20,7 +20,11 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.new(order_params)
     @order.place!(current_cart)
-    redirect_to @order, notice: "Замовлення №#{@order.id} оформлено. Дякуємо!"
+   if @order.card?
+  redirect_to new_order_payment_path(@order), notice: "Замовлення №#{@order.id} створено. Залишилося його оплатити."
+else
+  redirect_to @order, notice: "Замовлення №#{@order.id} оформлено. Дякуємо!"
+end
   rescue ActiveRecord::RecordInvalid
     render :new, status: :unprocessable_entity
   rescue Order::OutOfStock => e
