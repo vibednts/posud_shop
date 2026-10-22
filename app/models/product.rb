@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :category
-
+  has_many :reviews, dependent: :destroy
   ENERGY_CLASSES = %w[A B C D E F G].freeze
   WIDTHS = [45, 60].freeze
 
@@ -19,4 +19,11 @@ class Product < ApplicationRecord
   def in_stock? = stock.to_i.positive?
 
   def to_param = "#{id}-#{name.parameterize}"
+  
+  def average_rating
+  reviews.average(:rating)&.to_f&.round(1)
+end
+
+def reviews_count = reviews.count
+
 end

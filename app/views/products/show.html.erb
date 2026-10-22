@@ -30,4 +30,61 @@
     <tr><th>Програм миття</th><td><%= @product.programs_count %></td></tr>
     <tr><th>Гарантія</th><td><%= @product.warranty_months %> міс.</td></tr>
   </table>
+  
+  <% reviews = @product.reviews.includes(:user).order(created_at: :desc) %>
+
+<section id="reviews" class="reviews">
+  <h2>
+    Відгуки
+    <% if reviews.any? %>
+      <span class="rating-line">
+        <span class="stars"><%= rating_stars(@product.average_rating) %></span>
+        <%= @product.average_rating %> · <%= reviews.size %>
+      </span>
+    <% end %>
+  </h2>
+
+  <% if user_signed_in? %>
+    <% if reviews.any? { |r| r.user_id == current_user.id } %>
+      <p class="hint">Ви вже залишили відгук на цей товар.</p>
+    <% else %>
+      <%= form_with model: [@product, Review.new], class: "review-form panel" do |f| %>
+        <h3>Ваш відгук</h3>
+        <div class="star-input">
+          <% 5.downto(1) do |n| %>
+            <%= f.radio_button :rating, n, id: "star#{n}", required: true %>
+            <label for="star<%= n %>" title="<%= n %>">★</label>
+          <% end %>
+        </div>
+        <%= f.text_area :body, rows: 3, placeholder: "Поділіться враженнями про модель", required: true, minlength: 5 %>
+        <%= f.submit "Надіслати відгук", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="hint"><%= link_to "Увійдіть", new_user_session_path %>, щоб залишити відгук.</p>
+  <% end %>
+
+  <% if reviews.empty? %>
+    <div class="empty">Відгуків поки немає. Станьте першим!</div>
+  <% else %>
+    <div class="review-list">
+      <% reviews.each do |review| %>
+        <article class="review">
+          <header>
+            <b><%= review.user.name.presence || "Покупець" %></b>
+            <span class="stars"><%= rating_stars(review.rating) %></span>
+            <span class="muted-dark"><%= review.created_at.strftime("%d.%m.%Y") %></span>
+            <% if user_signed_in? && (review.user_id == current_user.id || current_user.admin?) %>
+              <%= button_to "Видалити", product_review_path(@product, review), method: :delete,
+                            class: "link-danger", form_class: "inline-form",
+                            data: { turbo_confirm: "Видалити відгук?" } %>
+            <% end %>
+          </header>
+          <p><%= review.body %></p>
+        </article>
+      <% end %>
+    </div>
+  <% end %>
+</section>
+  
 </div>

@@ -8,6 +8,9 @@
 
   <div class="card-body">
     <%= link_to product.name, product_path(product), class: "card-title" %>
+    <% if product.reviews_count > 0 %>
+  <div class="rating-line"><span class="stars"><%= rating_stars(product.average_rating) %></span> <%= product.average_rating %> (<%= product.reviews_count %>)</div>
+<% end %>
     <ul class="card-specs">
       <li><%= product.width_cm %> см</li>
       <li><%= product.capacity_sets %> комплектів</li>
