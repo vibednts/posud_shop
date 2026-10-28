@@ -22,13 +22,13 @@ class PaymentsController < ApplicationController
 
   private
 
-  def set_order
-    @order = current_user.orders.find(params[:order_id])
-  end
+    def set_order
+      @order = current_user.orders.find(params[:order_id])
+    end
 
-  def ensure_payable
-    return if @order.payable?
+    def ensure_payable
+      return if @order.payable?
 
-    redirect_to order_path(@order), alert: "Це замовлення не потребує оплати карткою"
-  end
+      redirect_to order_path(@order), alert: "Це замовлення не потребує оплати карткою"
+    end
 end

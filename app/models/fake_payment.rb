@@ -26,22 +26,22 @@ class FakePayment
 
   private
 
-  def failure(message)
-    Result.new(success: false, error: message)
-  end
-
-  def luhn_valid?
-    sum = @number.reverse.chars.each_with_index.sum do |ch, i|
-      d = ch.to_i
-      d *= 2 if i.odd?
-      d -= 9 if d > 9
-      d
+    def failure(message)
+      Result.new(success: false, error: message)
     end
-    (sum % 10).zero?
-  end
 
-  def expired?
-    month, year = @expiry.split("/").map(&:to_i)
-    Date.new(2000 + year, month, 1).end_of_month < Date.current
-  end
+    def luhn_valid?
+      sum = @number.reverse.chars.each_with_index.sum do |ch, i|
+        d = ch.to_i
+        d *= 2 if i.odd?
+        d -= 9 if d > 9
+        d
+      end
+      (sum % 10).zero?
+    end
+
+    def expired?
+      month, year = @expiry.split("/").map(&:to_i)
+      Date.new(2000 + year, month, 1).end_of_month < Date.current
+    end
 end
