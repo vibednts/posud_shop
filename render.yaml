@@ -13,7 +13,7 @@ services:
     # Запускаємо Puma напряму: Render сам віддає HTTPS і стискає відповіді.
     # Перед стартом db:prepare створює БД, застосовує міграції і seeds
     # (диск безкоштовного тарифу не постійний, тож БД створюється при кожному запуску).
-    dockerCommand: bash -c "./bin/rails db:prepare && exec ./bin/rails server"
+    dockerCommand: ./bin/render-start
     envVars:
       - key: SECRET_KEY_BASE
         generateValue: true    # Render згенерує секретний ключ сам
