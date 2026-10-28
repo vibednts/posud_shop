@@ -1,24 +1,94 @@
-# README
+# DishShop — інтернет-магазин посудомийних машин
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![CI](https://github.com/vibednts/posud_shop/actions/workflows/ci.yml/badge.svg)](https://github.com/vibednts/posud_shop/actions/workflows/ci.yml)
 
-Things you may want to cover:
+Курсовий проєкт на Ruby on Rails 8: каталог з фільтрами, кошик (зокрема для гостей),
+оформлення замовлень з доставкою, демо-оплата карткою, відгуки, форма зворотного
+зв'язку та адмін-панель.
 
-* Ruby version
+## Технології
 
-* System dependencies
+| Шар | Що використано |
+|---|---|
+| Мова / фреймворк | Ruby 3.2.2, Rails 8.1 (MVC) |
+| База даних | SQLite 3 (Solid Cache / Queue / Cable у production) |
+| Автентифікація | Devise |
+| Фронтенд | ERB-шаблони, власний CSS, Hotwire (Turbo + Stimulus), Importmap |
+| Файли | Active Storage (зображення товарів) |
+| Тести | Minitest, фікстури, Capybara (системні тести) |
+| Якість коду | RuboCop, Brakeman, bundler-audit |
+| CI | GitHub Actions |
+| Деплой | Docker, Render (Blueprint `render.yaml`) |
 
-* Configuration
+## Запуск локально
 
-* Database creation
+```bash
+bundle install
+bin/rails db:prepare     # створює БД, виконує міграції та seeds
+bin/rails server         # http://localhost:3000
+```
 
-* Database initialization
+Адміністратор із seeds: `admin@dishshop.ua` / `admin12345`
+(у production пароль береться зі змінної `ADMIN_PASSWORD`).
 
-* How to run the test suite
+## Тестування
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bin/rails test           # модульні та інтеграційні тести (моделі, контролери, адмінка, пошта)
+bin/rails test:system    # системні тести: повний шлях покупця й адміністратора
+bin/rails test:all       # усе разом
+```
 
-* Deployment instructions
+Що покрито тестами (145 тестів, ~440 перевірок):
 
-* ...
+- **Моделі** (`test/models`): валідації товарів, категорій, користувачів, відгуків і звернень;
+  кошик (додавання, ліміт залишку, суми); замовлення (вартість доставки, безкоштовна доставка
+  від 20 000 грн, списання залишків у транзакції, відкат при нестачі товару, повернення на
+  склад при скасуванні); демо-платіжний шлюз (алгоритм Луна, термін дії, CVV, відмова банку).
+- **Контролери** (`test/controllers`): каталог, фільтри, пошук і сортування; кошик гостя і
+  перенесення його в акаунт після входу; оформлення й оплата; доступ лише до своїх замовлень;
+  відгуки; контакти з надсиланням листа і захистом від спаму; сторінки 404.
+- **Адмін-панель** (`test/controllers/admin`): закритий доступ (гість → вхід, покупець → 404),
+  CRUD товарів (з завантаженням зображення) і категорій, зміна статусів замовлень.
+- **Системні тести** (`test/system`): гість додає товар → входить → оформлює замовлення;
+  оплата карткою; адміністратор додає товар і відправляє замовлення.
+
+Тести знайшли й допомогли виправити дві помилки: обробник «404» був оголошений
+всередині іншого методу (захист адмінки повертав 500 замість 404), а текстова
+версія листа з форми контактів була шаблонною заглушкою.
+
+Перевірки якості коду:
+
+```bash
+bin/rubocop              # стиль коду
+bin/brakeman             # статичний аналіз безпеки
+bin/bundler-audit        # вразливості в гемах
+```
+
+## Безперервна інтеграція (CI)
+
+`.github/workflows/ci.yml` запускається на кожен push у `main` і на кожен pull request:
+сканування безпеки (Brakeman, bundler-audit, importmap audit), RuboCop, тести і системні тести.
+Статус видно на значку вгорі та у вкладці **Actions** на GitHub.
+
+## Деплой (Render)
+
+Застосунок пакується в Docker-образ (`Dockerfile`), а сервіс на Render описаний у
+`render.yaml` (Infrastructure as Code).
+
+1. Увійти на [render.com](https://render.com) через GitHub.
+2. **New → Blueprint** → обрати репозиторій `posud_shop` → **Apply**.
+3. Ввести значення `ADMIN_PASSWORD` (пароль адміністратора на сайті).
+4. Дочекатися збірки (5–10 хв) і відкрити адресу виду `https://posud-shop.onrender.com`.
+
+Далі кожен push у `main`, для якого пройшов CI, деплоїться автоматично.
+
+Під час старту контейнер виконує `bin/rails db:prepare`: створює базу, застосовує
+міграції і заповнює демо-товарами.
+
+Обмеження безкоштовного тарифу: сервіс «засинає» після 15 хв без запитів (перше
+відкриття — до хвилини), а диск не постійний, тож після перезапуску база
+повертається до початкових демо-даних. Для реального магазину треба підключити
+PostgreSQL і хмарне сховище файлів (S3).
+
+Альтернатива для власного сервера (наприклад, DigitalOcean): Kamal — `config/deploy.yml`, `bin/kamal deploy`.

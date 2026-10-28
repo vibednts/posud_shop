@@ -27,6 +27,11 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Як обрати посудомийну машину"
   end
 
+  test "health check /up відповідає 200 для хостингу" do
+    get rails_health_check_path
+    assert_response :success
+  end
+
   test "неіснуюча адреса повертає сторінку 404" do
     get "/such/page/does/not/exist"
     assert_response :not_found

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root "home#index"
+
+  # Перевірка стану для хостингу (Render, Kamal): 200, якщо застосунок запустився
+  get "up", to: "rails/health#show", as: :rails_health_check
 resources :products, only: %i[index show] do
   resources :reviews, only: %i[create destroy]
 end
