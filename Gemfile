@@ -68,3 +68,7 @@ end
 gem "devise", "~> 5.0"
 
 gem "letter_opener", "~> 1.10", group: :development
+
+# Українські переклади стандартних повідомлень Rails і Devise
+gem "rails-i18n", "~> 8.0"
+gem "devise-i18n", "~> 1.13"

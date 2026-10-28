@@ -1,0 +1,74 @@
+# Українські назви моделей і полів для повідомлень валідації.
+# Стандартні повідомлення Rails і Devise беруться з гемів rails-i18n і devise-i18n.
+uk:
+  activerecord:
+    models:
+      user: Користувач
+      product: Товар
+      category: Категорія
+      cart: Кошик
+      cart_item: Позиція кошика
+      order: Замовлення
+      order_item: Позиція замовлення
+      review: Відгук
+      contact_message: Звернення
+    attributes:
+      user:
+        name: Ім'я
+        email: Email
+        phone: Телефон
+        password: Пароль
+        password_confirmation: Підтвердження пароля
+        current_password: Поточний пароль
+      product:
+        name: Назва
+        brand: Бренд
+        description: Опис
+        price: Ціна
+        stock: Залишок
+        width_cm: Ширина
+        installation: Тип встановлення
+        capacity_sets: Місткість
+        energy_class: Клас енергоефективності
+        noise_db: Рівень шуму
+        programs_count: Кількість програм
+        warranty_months: Гарантія
+        category: Категорія
+        image: Зображення
+      category:
+        name: Назва
+        slug: Slug
+        description: Опис
+      cart_item:
+        cart: Кошик
+        product: Товар
+        quantity: Кількість
+        product_id: Товар
+      order:
+        user: Покупець
+        customer_name: Ім'я та прізвище
+        phone: Телефон
+        email: Email
+        city: Місто
+        address: Адреса
+        delivery_method: Спосіб доставки
+        payment_method: Спосіб оплати
+        status: Статус
+        total: Сума
+        order_items: Товари
+      order_item:
+        order: Замовлення
+        product: Товар
+        quantity: Кількість
+        unit_price: Ціна
+      review:
+        user: Користувач
+        product: Товар
+        rating: Оцінка
+        body: Текст відгуку
+        user_id: Користувач
+      contact_message:
+        name: Ім'я
+        email: Email
+        subject: Тема
+        body: Повідомлення

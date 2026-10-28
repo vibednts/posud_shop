@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module PosudShop
   class Application < Rails::Application
+    # Інтерфейс і повідомлення валідації українською
+    config.i18n.default_locale = :uk
+    config.i18n.available_locales = %i[uk en]
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
