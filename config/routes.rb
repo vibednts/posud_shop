@@ -7,7 +7,7 @@ end
   resource :cart, only: :show
   resources :cart_items, only: %i[create update destroy]
   resources :orders, only: %i[index new create show]
-  
+
    get  "contacts", to: "contact_messages#new",    as: :contacts
    post "contacts", to: "contact_messages#create"
    namespace :admin do
@@ -26,4 +26,3 @@ get "how-to-choose", to: "pages#guide",    as: :guide
    match "*path", to: "errors#not_found", via: :all,
       constraints: ->(req) { !req.path.start_with?("/rails/") }
 end
-
