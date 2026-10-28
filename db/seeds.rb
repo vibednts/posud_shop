@@ -31,7 +31,7 @@ end
 
 User.find_or_create_by!(email: "admin@dishshop.ua") do |u|
   u.name = "Адміністратор"
-  u.password = "admin12345"
+  u.password = ENV.fetch("ADMIN_PASSWORD", "admin12345")
   u.admin = true
 end
 

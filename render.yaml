@@ -1,0 +1,22 @@
+# Render Blueprint: опис інфраструктури як коду (Infrastructure as Code).
+# Render читає цей файл з репозиторію і сам створює веб-сервіс.
+# Документація: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: posud-shop
+    runtime: docker            # збираємо за Dockerfile з репозиторію
+    plan: free
+    region: frankfurt          # найближчий до України регіон
+    branch: main
+    autoDeployTrigger: checksPass   # деплой лише після того, як GitHub Actions (CI) пройшли
+    healthCheckPath: /up
+    # Запускаємо Puma напряму: Render сам віддає HTTPS і стискає відповіді.
+    # Entrypoint перед стартом виконує db:prepare (міграції + seeds для нової БД).
+    dockerCommand: ./bin/rails server
+    envVars:
+      - key: SECRET_KEY_BASE
+        generateValue: true    # Render згенерує секретний ключ сам
+      - key: ADMIN_PASSWORD
+        sync: false            # Render попросить ввести пароль адміністратора під час створення
+      - key: RAILS_LOG_LEVEL
+        value: info
