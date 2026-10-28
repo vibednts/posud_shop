@@ -1,29 +1,25 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+customer_card_order:
+  user: customer
+  status: pending
+  delivery_method: nova_poshta
+  payment_method: card
+  customer_name: Іван Петренко
+  phone: "+380501234567"
+  email: customer@example.com
+  city: Київ
+  address: Відділення №5
+  delivery_cost: 0
+  total: 21999
 
-one:
-  user: one
-  status: MyString
-  delivery_method: MyString
-  payment_method: MyString
-  customer_name: MyString
-  phone: MyString
-  email: MyString
-  city: MyString
-  address: MyString
-  comment: MyText
-  delivery_cost: 9.99
-  total: 9.99
-
-two:
-  user: two
-  status: MyString
-  delivery_method: MyString
-  payment_method: MyString
-  customer_name: MyString
-  phone: MyString
-  email: MyString
-  city: MyString
-  address: MyString
-  comment: MyText
-  delivery_cost: 9.99
-  total: 9.99
+other_cash_order:
+  user: other
+  status: pending
+  delivery_method: ukrposhta
+  payment_method: cash_on_delivery
+  customer_name: Олена Коваль
+  phone: "+380671112233"
+  email: other@example.com
+  city: Львів
+  address: вул. Городоцька, 1
+  delivery_cost: 70
+  total: 12569

@@ -1,13 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+customer_on_beko:
+  user: customer
+  product: beko
+  rating: 5
+  body: Тиха й економна машина, рекомендую
 
-one:
-  user: one
-  product: one
-  rating: 1
-  body: MyText
-
-two:
-  user: two
-  product: two
-  rating: 1
-  body: MyText
+other_on_beko:
+  user: other
+  product: beko
+  rating: 4
+  body: Добре миє, але програма довга
