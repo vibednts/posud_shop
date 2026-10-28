@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+# Перед запуском веб-сервера створюємо БД або застосовуємо нові міграції.
+# Команду може бути передано окремими аргументами (./bin/rails server)
+# або одним рядком через sh -c (так робить Render), тому шукаємо
+# "rails server" у всьому рядку команди.
+if [[ "$*" == *"rails server"* || "$*" == *"thrust"* ]]; then
   ./bin/rails db:prepare
 fi
 
