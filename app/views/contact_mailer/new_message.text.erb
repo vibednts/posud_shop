@@ -1,3 +1,6 @@
-Contact#new_message
+Нове звернення з сайту DishShop
 
-<%= @greeting %>, find me in app/views/contact_mailer/new_message.text.erb
+Від: <%= @message.name %> (<%= @message.email %>)
+Тема: <%= @message.subject %>
+
+<%= @message.body %>

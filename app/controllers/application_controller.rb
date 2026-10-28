@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_cart, :cart_count
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
- # Кошик поточного відвідувача (створюється, коли потрібен)
+
+  # Кошик поточного відвідувача (створюється, коли потрібен)
   def current_cart
     @current_cart ||=
       if user_signed_in?
@@ -17,9 +18,9 @@ class ApplicationController < ActionController::Base
   def cart_count
     cart = if user_signed_in?
              Cart.find_by(user: current_user)
-           else
+    else
              Cart.find_by(id: session[:cart_id], user_id: nil)
-           end
+    end
     cart ? cart.total_quantity : 0
   end
 
@@ -36,15 +37,15 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name phone])
   end
 
- private
+  private
+
+  def render_not_found
+    render "errors/not_found", status: :not_found, formats: :html
+  end
 
   def merge_guest_cart(user)
     guest = Cart.find_by(id: session[:cart_id], user_id: nil)
     return unless guest
-
-  def render_not_found
-  render "errors/not_found", status: :not_found, formats: :html
-end
 
     user_cart = Cart.find_or_create_by!(user: user)
     guest.cart_items.includes(:product).each do |item|
@@ -53,5 +54,4 @@ end
     guest.destroy
     session.delete(:cart_id)
   end
-
 end
