@@ -1,0 +1,51 @@
+<% terms = { "nova_poshta" => "1-3 дні", "ukrposhta" => "3-7 днів",
+             "courier" => "1-2 дні по місту", "pickup" => "У день замовлення" } %>
+
+<div class="container page content-page">
+  <h1 class="page-title">Доставка й оплата</h1>
+
+  <section id="delivery">
+    <h2>Доставка</h2>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Спосіб</th><th>Вартість</th><th>Орієнтовний термін</th></tr></thead>
+        <tbody>
+          <% Order::DELIVERY_LABELS.each do |key, label| %>
+            <% cost = Order::DELIVERY_COSTS[key] %>
+            <tr>
+              <td><b><%= label %></b></td>
+              <td><%= cost.zero? ? "Безкоштовно" : format_price(cost) %></td>
+              <td><%= terms[key] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint">Безкоштовна доставка Новою поштою й Укрпоштою від <%= format_price(Order::FREE_DELIVERY_FROM) %>. На кур'єрську доставку акція не поширюється.</p>
+  </section>
+
+  <section id="payment">
+    <h2>Оплата</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Оплата при отриманні</h3>
+        <p>Розраховуєтеся в момент отримання замовлення: у відділенні пошти, кур'єру або в магазині при самовивозі.</p>
+      </div>
+      <div class="info-card">
+        <h3>Банківська картка онлайн</h3>
+        <p>Після оформлення замовлення ви переходите на сторінку оплати. Статус замовлення автоматично змінюється на «Оплачено».</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Як оформити замовлення</h2>
+    <ol class="steps-list">
+      <li>Оберіть модель у <%= link_to "каталозі", products_path %> та додайте її в кошик.</li>
+      <li>Перейдіть у кошик і натисніть «Оформити замовлення» (потрібен вхід або реєстрація).</li>
+      <li>Вкажіть контакти, спосіб доставки та оплати.</li>
+      <li>Підтвердіть замовлення. Статус можна відстежувати в розділі «Замовлення».</li>
+    </ol>
+    <%= link_to "Перейти до каталогу", products_path, class: "btn btn-primary btn-lg" %>
+  </section>
+</div>

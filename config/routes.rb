@@ -20,6 +20,9 @@ end
   resources :orders, only: %i[index new create show] do
   resource :payment, only: %i[new create]
 end
+get "delivery",      to: "pages#delivery", as: :delivery
+get "warranty",      to: "pages#warranty", as: :warranty
+get "how-to-choose", to: "pages#guide",    as: :guide
    match "*path", to: "errors#not_found", via: :all,
       constraints: ->(req) { !req.path.start_with?("/rails/") }
 end

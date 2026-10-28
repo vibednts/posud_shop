@@ -26,7 +26,9 @@
         <nav class="nav">
           <%= link_to "Головна", root_path, class: "nav-link" %>
 	<%= link_to "Каталог", products_path, class: "nav-link" %>
-          <a href="#" class="nav-link">Доставка й оплата</a>
+  <%= link_to "Доставка й оплата", delivery_path, class: "nav-link" %>
+    <%= link_to "Гарантія", warranty_path, class: "nav-link" %>
+
 	<%= link_to "Контакти", contacts_path, class: "nav-link" %>
         </nav>
 
@@ -52,27 +54,34 @@
 <%= render "admin/shared/nav" if controller_path.start_with?("admin/") %>
     <main><%= yield %></main>
 
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <div class="logo logo-light"><span class="logo-mark"></span>Dish<b>Shop</b></div>
-          <p class="muted">Посудомийні машини провідних брендів із гарантією та доставкою по Україні.</p>
-        </div>
-        <div>
-          <h4>Магазин</h4>
-          <a href="#">Каталог</a><a href="#">Вбудовані</a><a href="#">Окремостоячі</a><a href="#">Аксесуари</a>
-        </div>
-        <div>
-          <h4>Клієнтам</h4>
-          <a href="#">Доставка й оплата</a><a href="#">Гарантія</a>
-          <%= link_to "Зворотний зв'язок", contacts_path %>
-        </div>
-        <div>
-          <h4>Контакти</h4>
-          <span>Пн-Нд, 9:00-20:00</span><span>+380 00 000 00 00</span><span>info@dishshop.ua</span>
-        </div>
-      </div>
-      <div class="container footer-bottom">© <%= Time.current.year %> DishShop. Усі права захищено.</div>
-    </footer>
+   <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="logo logo-light"><span class="logo-mark"></span>Dish<b>Shop</b></div>
+      <p class="muted">Посудомийні машини провідних брендів із гарантією та доставкою по Україні.</p>
+    </div>
+    <div>
+      <h4>Магазин</h4>
+      <%= link_to "Каталог", products_path %>
+      <%= link_to "Вбудовані", products_path(installation: "built_in") %>
+      <%= link_to "Окремостоячі", products_path(installation: "freestanding") %>
+      <%= link_to "Аксесуари", products_path(category: "accessory") %>
+      <%= link_to "Як обрати машину", guide_path %>
+    </div>
+    <div>
+      <h4>Клієнтам</h4>
+      <%= link_to "Доставка й оплата", delivery_path %>
+      <%= link_to "Гарантія", warranty_path %>
+      <%= link_to "Зворотний зв'язок", contacts_path %>
+    </div>
+    <div>
+      <h4>Контакти</h4>
+      <span>Пн-Нд, 9:00-20:00</span>
+      <a href="tel:+380662539501">+380 66 253 95 01</a>
+      <a href="mailto:info@dishshop.ua">info@dishshop.ua</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">© <%= Time.current.year %> DishShop. Усі права захищено.</div>
+</footer>
   </body>
 </html>

@@ -5,8 +5,8 @@
       <h1>Чистий посуд<br>без зусиль</h1>
       <p>Вбудовані та окремостоячі посудомийні машини Bosch, Siemens, Electrolux, Beko. Офіційна гарантія, швидка доставка, чесні ціни.</p>
       <div class="hero-buttons">
-      <%= link_to "Перейти до каталогу", products_path, class: "btn btn-primary btn-lg" %>
-        <a href="#" class="btn btn-outline btn-lg">Як обрати машину</a>
+        <%= link_to "Перейти до каталогу", products_path, class: "btn btn-primary btn-lg" %>
+        <%= link_to "Як обрати машину", guide_path, class: "btn btn-outline btn-lg" %>
       </div>
     </div>
 
@@ -20,8 +20,20 @@
 </section>
 
 <section class="container features">
-  <div class="feature"><div class="feature-ico">🚚</div><h3>Швидка доставка</h3><p>Нова пошта, Укрпошта, кур'єр і самовивіз.</p></div>
-  <div class="feature"><div class="feature-ico">🛡️</div><h3>Офіційна гарантія</h3><p>До 36 місяців на всі моделі.</p></div>
-  <div class="feature"><div class="feature-ico">💳</div><h3>Зручна оплата</h3><p>Карткою онлайн або при отриманні.</p></div>
-  <div class="feature"><div class="feature-ico">💬</div><h3>Підтримка</h3><p>Допоможемо обрати модель під вашу кухню.</p></div>
+  <%= link_to delivery_path(anchor: "delivery"), class: "feature" do %>
+    <div class="feature-ico">🚚</div><h3>Швидка доставка</h3>
+    <p>Нова пошта, Укрпошта, кур'єр і самовивіз.</p><span class="feature-more">Докладніше →</span>
+  <% end %>
+  <%= link_to warranty_path, class: "feature" do %>
+    <div class="feature-ico">🛡️</div><h3>Офіційна гарантія</h3>
+    <p>До 36 місяців на всі моделі.</p><span class="feature-more">Докладніше →</span>
+  <% end %>
+  <%= link_to delivery_path(anchor: "payment"), class: "feature" do %>
+    <div class="feature-ico">💳</div><h3>Зручна оплата</h3>
+    <p>Карткою онлайн або при отриманні.</p><span class="feature-more">Докладніше →</span>
+  <% end %>
+  <%= link_to contacts_path, class: "feature" do %>
+    <div class="feature-ico">💬</div><h3>Підтримка</h3>
+    <p>Допоможемо обрати модель під вашу кухню.</p><span class="feature-more">Написати нам →</span>
+  <% end %>
 </section>

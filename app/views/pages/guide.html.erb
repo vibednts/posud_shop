@@ -1,0 +1,59 @@
+<div class="container page content-page">
+  <h1 class="page-title">Як обрати посудомийну машину</h1>
+  <p class="lead">Чотири питання допоможуть швидко звузити вибір.</p>
+
+  <section>
+    <h2>1. Ширина: 45 чи 60 см</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Вузькі, 45 см</h3>
+        <p>Для невеликої кухні та сім'ї з 1-3 осіб. Вміщують 9-10 комплектів посуду.</p>
+        <%= link_to "Показати 45 см", products_path(width: 45), class: "btn btn-outline btn-sm" %>
+      </div>
+      <div class="info-card">
+        <h3>Повнорозмірні, 60 см</h3>
+        <p>Для сім'ї з 3-5 осіб. Вміщують 12-14 комплектів, тож їх можна вмикати рідше.</p>
+        <%= link_to "Показати 60 см", products_path(width: 60), class: "btn btn-outline btn-sm" %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Вбудована чи окремостояча</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Вбудована</h3>
+        <p>Ховається за фасадом кухонних меблів і не порушує інтер'єр. Потрібна готова ніша.</p>
+        <%= link_to "Показати вбудовані", products_path(installation: "built_in"), class: "btn btn-outline btn-sm" %>
+      </div>
+      <div class="info-card">
+        <h3>Окремостояча</h3>
+        <p>Ставиться де зручно, потрібні лише підключення води й електрики.</p>
+        <%= link_to "Показати окремостоячі", products_path(installation: "freestanding"), class: "btn btn-outline btn-sm" %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. На що ще дивитися</h2>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Параметр</th><th>Що означає</th></tr></thead>
+        <tbody>
+          <tr><td><b>Клас енергоефективності</b></td><td>Чим ближче до A, тим менше машина споживає електроенергії та води.</td></tr>
+          <tr><td><b>Рівень шуму</b></td><td>До 45 дБ вважається тихою роботою, важливо для відкритої кухні та студії.</td></tr>
+          <tr><td><b>Кількість програм</b></td><td>Для щоденного користування вистачає 5-6 програм: інтенсивна, звичайна, економна, швидка.</td></tr>
+          <tr><td><b>Місткість</b></td><td>Число комплектів посуду за один цикл. На людину орієнтовно 3-4 комплекти на добу.</td></tr>
+          <tr><td><b>Гарантія</b></td><td>Чим довша, тим краще. Детальніше на сторінці <%= link_to "«Гарантія»", warranty_path %>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Бюджет</h2>
+    <p>У каталозі можна відфільтрувати моделі за ціною й відсортувати від дешевших до дорожчих.</p>
+    <%= link_to "Перейти до каталогу", products_path, class: "btn btn-primary btn-lg" %>
+    <%= link_to "Потрібна порада? Напишіть нам", contacts_path, class: "btn btn-ghost btn-lg" %>
+  </section>
+</div>
