@@ -46,14 +46,14 @@ module Admin
 
     private
 
-    def set_product
-      @product = Product.find(params[:id])
-    end
+      def set_product
+        @product = Product.find(params[:id])
+      end
 
-    def product_params
-      params.require(:product).permit(:name, :brand, :description, :price, :stock, :width_cm,
-                                      :installation, :capacity_sets, :energy_class, :noise_db,
-                                      :programs_count, :warranty_months, :category_id, :image)
-    end
+      def product_params
+        params.require(:product).permit(:name, :brand, :description, :price, :stock, :width_cm,
+                                        :installation, :capacity_sets, :energy_class, :noise_db,
+                                        :programs_count, :warranty_months, :category_id, :image)
+      end
   end
 end

@@ -20,11 +20,11 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.new(order_params)
     @order.place!(current_cart)
-   if @order.card?
-  redirect_to new_order_payment_path(@order), notice: "Замовлення №#{@order.id} створено. Залишилося його оплатити."
-   else
-  redirect_to @order, notice: "Замовлення №#{@order.id} оформлено. Дякуємо!"
-   end
+    if @order.card?
+      redirect_to new_order_payment_path(@order), notice: "Замовлення №#{@order.id} створено. Залишилося його оплатити."
+    else
+      redirect_to @order, notice: "Замовлення №#{@order.id} оформлено. Дякуємо!"
+    end
   rescue ActiveRecord::RecordInvalid
     render :new, status: :unprocessable_entity
   rescue Order::OutOfStock => e
@@ -33,12 +33,12 @@ class OrdersController < ApplicationController
 
   private
 
-  def require_items
-    redirect_to cart_path, alert: "Кошик порожній" if current_cart.empty?
-  end
+    def require_items
+      redirect_to cart_path, alert: "Кошик порожній" if current_cart.empty?
+    end
 
-  def order_params
-    params.require(:order).permit(:customer_name, :phone, :email, :city, :address,
-                                  :delivery_method, :payment_method, :comment)
-  end
+    def order_params
+      params.require(:order).permit(:customer_name, :phone, :email, :city, :address,
+                                    :delivery_method, :payment_method, :comment)
+    end
 end

@@ -10,8 +10,8 @@ class CartItem < ApplicationRecord
 
   private
 
-  def within_stock
-    return unless product && quantity
-    errors.add(:base, "«#{product.name}»: доступно лише #{product.stock} шт.") if quantity > product.stock
-  end
+    def within_stock
+      return unless product && quantity
+      errors.add(:base, "«#{product.name}»: доступно лише #{product.stock} шт.") if quantity > product.stock
+    end
 end

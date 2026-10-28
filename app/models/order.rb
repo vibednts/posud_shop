@@ -47,23 +47,22 @@ class Order < ApplicationRecord
   def status_label   = STATUS_LABELS[status]
   def items_total    = order_items.sum { |i| i.unit_price * i.quantity }
 
+  # Зміна статусу з поверненням товарів на склад при скасуванні
+  def change_status!(new_status)
+    new_status = new_status.to_s
+    raise ArgumentError, "Невідомий статус" unless Order.statuses.key?(new_status)
+    return if new_status == status
+    raise ArgumentError, "Скасоване замовлення не можна відновити" if cancelled?
 
-# Зміна статусу з поверненням товарів на склад при скасуванні
-def change_status!(new_status)
-  new_status = new_status.to_s
-  raise ArgumentError, "Невідомий статус" unless Order.statuses.key?(new_status)
-  return if new_status == status
-  raise ArgumentError, "Скасоване замовлення не можна відновити" if cancelled?
-
-  transaction do
-    if new_status == "cancelled"
-      order_items.each do |item|
-        Product.where(id: item.product_id).update_all([ "stock = stock + ?", item.quantity ])
+    transaction do
+      if new_status == "cancelled"
+        order_items.each do |item|
+          Product.where(id: item.product_id).update_all([ "stock = stock + ?", item.quantity ])
+        end
       end
+      update!(status: new_status)
     end
-    update!(status: new_status)
   end
-end
 
   def payable? = card? && pending?
 

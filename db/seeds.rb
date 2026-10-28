@@ -12,11 +12,11 @@ data = [
   [ "Bosch SMV25EX00K",   "Bosch",      "full", 21999, 12, 60, :built_in,     13, "E", 48,  5, 24 ],
   [ "Bosch SMS4HVI33E",   "Bosch",      "full", 26499,  8, 60, :freestanding, 14, "D", 42,  6, 24 ],
   [ "Siemens SN63HX42VE", "Siemens",    "full", 32999,  5, 60, :built_in,     14, "C", 42,  8, 36 ],
-  [ "Electrolux ESF9516LOX", "Electrolux", "slim", 17999, 10, 45, :freestanding, 9, "E", 49,  5, 24 ],
-  [ "Beko DIS25010",      "Beko",       "slim", 12499, 15, 45, :built_in,      10, "E", 49,  5, 24 ],
-  [ "Gorenje GS541D10W",  "Gorenje",    "slim", 14299,  0, 45, :freestanding,  9, "E", 47,  5, 24 ],
+  [ "Electrolux ESF9516LOX", "Electrolux", "slim", 17999, 10, 45, :freestanding, 9, "E", 49, 5, 24 ],
+  [ "Beko DIS25010",      "Beko",       "slim", 12499, 15, 45, :built_in, 10, "E", 49, 5, 24 ],
+  [ "Gorenje GS541D10W",  "Gorenje",    "slim", 14299, 0, 45, :freestanding, 9, "E", 47, 5, 24 ],
   [ "Whirlpool WSC 3M17", "Whirlpool",  "compact", 11799, 7, 60, :freestanding, 6, "F", 51, 6, 24 ],
-  [ "Candy CDCP 6/E",     "Candy",      "compact",  9999, 9, 60, :freestanding, 6, "F", 54, 6, 24 ]
+  [ "Candy CDCP 6/E",     "Candy",      "compact", 9999, 9, 60, :freestanding, 6, "F", 54, 6, 24 ]
 ]
 
 data.each do |name, brand, cat, price, stock, width, inst, sets, energy, noise, programs, warranty|
