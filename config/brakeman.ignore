@@ -1,0 +1,15 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 121,
+      "fingerprint": "edf687f759ec9765bd5db185dbc615c80af77d6e7e19386fc42934e7a80307af",
+      "check_name": "EOLRuby",
+      "message": "Support for Ruby 3.2.2 ended on 2026-03-31",
+      "file": ".ruby-version",
+      "line": 1,
+      "note": "Курсовий проєкт розроблено на Ruby 3.2.2 (встановлено у віртуальній машині). Перехід на Ruby 3.3+ заплановано як подальший розвиток."
+    }
+  ],
+  "brakeman_version": "8.1.0"
+}

@@ -4,12 +4,17 @@ require "rails/test_help"
 
 module ActiveSupport
   class TestCase
-    # Run tests in parallel with specified workers
+    # Тести запускаються паралельно на всіх ядрах процесора
     parallelize(workers: :number_of_processors)
 
-    # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+    # Завантажуємо всі фікстури з test/fixtures/*.yml
     fixtures :all
+  end
+end
 
-    # Add more helper methods to be used by all tests here...
+module ActionDispatch
+  class IntegrationTest
+    # sign_in / sign_out від Devise для тестів контролерів
+    include Devise::Test::IntegrationHelpers
   end
 end

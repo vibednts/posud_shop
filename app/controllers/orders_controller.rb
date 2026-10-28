@@ -22,9 +22,9 @@ class OrdersController < ApplicationController
     @order.place!(current_cart)
    if @order.card?
   redirect_to new_order_payment_path(@order), notice: "Замовлення №#{@order.id} створено. Залишилося його оплатити."
-else
+   else
   redirect_to @order, notice: "Замовлення №#{@order.id} оформлено. Дякуємо!"
-end
+   end
   rescue ActiveRecord::RecordInvalid
     render :new, status: :unprocessable_entity
   rescue Order::OutOfStock => e

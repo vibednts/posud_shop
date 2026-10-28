@@ -67,4 +67,4 @@ end
 
 gem "devise", "~> 5.0"
 
-gem "letter_opener", "~> 1.10", :group => :development
+gem "letter_opener", "~> 1.10", group: :development

@@ -1,11 +1,13 @@
 require "test_helper"
 
 class ContactMailerTest < ActionMailer::TestCase
-  test "new_message" do
-    mail = ContactMailer.new_message
-    assert_equal "New message", mail.subject
-    assert_equal [ "to@example.org" ], mail.to
-    assert_equal [ "from@example.com" ], mail.from
-    assert_match "Hi", mail.body.encoded
+  test "лист про нове звернення йде магазину з адресою для відповіді" do
+    message = contact_messages(:question)
+    mail = ContactMailer.new_message(message)
+
+    assert_equal [ ContactMailer::SHOP_EMAIL ], mail.to
+    assert_equal [ message.email ], mail.reply_to
+    assert_equal "Нове звернення: #{message.subject}", mail.subject
+    assert_match message.body, mail.text_part.body.to_s
   end
 end

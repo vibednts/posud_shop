@@ -1,15 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  order: one
-  product: one
-  product_name: MyString
-  unit_price: 9.99
+customer_card_order_bosch:
+  order: customer_card_order
+  product: bosch
+  product_name: Bosch SMV25EX00K
+  unit_price: 21999
   quantity: 1
 
-two:
-  order: two
-  product: two
-  product_name: MyString
-  unit_price: 9.99
+other_cash_order_beko:
+  order: other_cash_order
+  product: beko
+  product_name: Beko DIS25010
+  unit_price: 12499
   quantity: 1

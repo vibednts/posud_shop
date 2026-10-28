@@ -16,10 +16,10 @@ class ProductsController < ApplicationController
     end
 
     scope = case params[:sort]
-            when "price_asc"  then scope.order(price: :asc)
-            when "price_desc" then scope.order(price: :desc)
-            else scope.order(:id)
-            end
+    when "price_asc"  then scope.order(price: :asc)
+    when "price_desc" then scope.order(price: :desc)
+    else scope.order(:id)
+    end
 
     @products = scope
   end

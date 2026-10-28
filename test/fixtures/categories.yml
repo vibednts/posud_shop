@@ -1,11 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+full:
+  name: Повнорозмірні 60 см
+  slug: full
+  description: Для великої родини
 
-one:
-  name: MyString
-  slug: MyString
-  description: MyText
+slim:
+  name: Вузькі 45 см
+  slug: slim
+  description: Для невеликої кухні
 
-two:
-  name: MyString
-  slug: MyString
-  description: MyText
+empty:
+  name: Аксесуари
+  slug: accessory
+  description: Засоби та фільтри

@@ -1,31 +1,44 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+bosch:
+  name: Bosch SMV25EX00K
+  brand: Bosch
+  description: Вбудована посудомийна машина на 13 комплектів
+  price: 21999
+  stock: 5
+  width_cm: 60
+  installation: built_in
+  capacity_sets: 13
+  energy_class: E
+  noise_db: 48
+  programs_count: 5
+  warranty_months: 24
+  category: full
 
-one:
-  name: MyString
-  brand: MyString
-  description: MyText
-  price: 9.99
-  stock: 1
-  width_cm: 1
-  installation: MyString
-  capacity_sets: 1
-  energy_class: MyString
-  noise_db: 1
-  programs_count: 1
-  warranty_months: 1
-  category: one
+beko:
+  name: Beko DIS25010
+  brand: Beko
+  description: Вузька посудомийна машина на 10 комплектів
+  price: 12499
+  stock: 2
+  width_cm: 45
+  installation: freestanding
+  capacity_sets: 10
+  energy_class: E
+  noise_db: 49
+  programs_count: 5
+  warranty_months: 24
+  category: slim
 
-two:
-  name: MyString
-  brand: MyString
-  description: MyText
-  price: 9.99
-  stock: 1
-  width_cm: 1
-  installation: MyString
-  capacity_sets: 1
-  energy_class: MyString
-  noise_db: 1
-  programs_count: 1
-  warranty_months: 1
-  category: two
+sold_out:
+  name: Gorenje GS541D10W
+  brand: Gorenje
+  description: Немає в наявності
+  price: 14299
+  stock: 0
+  width_cm: 45
+  installation: freestanding
+  capacity_sets: 9
+  energy_class: E
+  noise_db: 47
+  programs_count: 5
+  warranty_months: 24
+  category: slim

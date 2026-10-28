@@ -5,7 +5,7 @@ has_many :cart_items, dependent: :destroy
 has_one_attached :image
   has_many :reviews, dependent: :destroy
   ENERGY_CLASSES = %w[A B C D E F G].freeze
-  WIDTHS = [45, 60].freeze
+  WIDTHS = [ 45, 60 ].freeze
 
 enum :installation, { built_in: "built_in", freestanding: "freestanding" }, validate: true
 
@@ -25,7 +25,7 @@ INSTALLATION_LABELS = { "built_in" => "Вбудована", "freestanding" => "�
   def in_stock? = stock.to_i.positive?
 
   def to_param = "#{id}-#{name.parameterize}"
-  
+
   def average_rating
   reviews.average(:rating)&.to_f&.round(1)
 end

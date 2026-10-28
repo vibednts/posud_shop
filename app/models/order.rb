@@ -58,7 +58,7 @@ def change_status!(new_status)
   transaction do
     if new_status == "cancelled"
       order_items.each do |item|
-        Product.where(id: item.product_id).update_all(["stock = stock + ?", item.quantity])
+        Product.where(id: item.product_id).update_all([ "stock = stock + ?", item.quantity ])
       end
     end
     update!(status: new_status)
